@@ -3,15 +3,16 @@ package matthew.codetest.model;
 public class RequestData {
     private int taskId;
     private String taskType;
-    private String inputString;
+    private String originalInputString;
+    private String preProcessedString;
 
     public RequestData() {
     }
 
-    public RequestData(int taskId, String taskType, String inputString) {
+    public RequestData(int taskId, String taskType, String originalInputString) {
         this.taskId = taskId;
         this.taskType = taskType;
-        this.inputString = inputString;
+        this.originalInputString = originalInputString;
     }
 
     public int getTaskId() {
@@ -30,12 +31,20 @@ public class RequestData {
         this.taskType = taskType;
     }
 
-    public String getInputString() {
-        return inputString;
+    public String getOriginalInputString() {
+        return originalInputString;
     }
 
-    public void setInputString(String inputString) {
-        this.inputString = inputString;
+    public void setOriginalInputString(String originalInputString) {
+        this.originalInputString = originalInputString;
+    }
+
+    public String getPreProcessedString() {
+        return preProcessedString;
+    }
+
+    public void setPreProcessedString(String preProcessedString) {
+        this.preProcessedString = preProcessedString;
     }
 
     @Override
@@ -43,7 +52,8 @@ public class RequestData {
         return "RequestData{" +
                 "taskId=" + taskId +
                 ", taskType='" + taskType + '\'' +
-                ", inputString='" + inputString + '\'' +
+                ", originalInputString='" + originalInputString + '\'' +
+                ", preProcessedData='" + preProcessedString + '\'' +
                 '}';
     }
 }

@@ -1,17 +1,23 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.listener.IListener;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class AbstractHandler implements IHandler {
 
     private Pattern pattern = Pattern.compile(REGEX_STRING);
 
+    private List<IListener> handleListeners = new ArrayList<>();
 
     @Override
     public ResponseData handle(RequestData requestData) {
+        handleListeners.stream().forEach(listener -> listener.preHandle(requestData));
+
         ResponseData responseData;
 
         String errorMsg = validate(requestData);
@@ -22,6 +28,8 @@ public abstract class AbstractHandler implements IHandler {
             responseData.setErrorMsg(errorMsg);
         }
 
+        handleListeners.stream().forEach(listener -> listener.postHandle(requestData, responseData));
+
         return responseData;
     }
 
@@ -29,10 +37,10 @@ public abstract class AbstractHandler implements IHandler {
 
     private String validate(RequestData requestData) {
         if (requestData == null
-                || requestData.getInputString() == null
-                || requestData.getInputString().isBlank()) {
+                || requestData.getOriginalInputString() == null
+                || requestData.getOriginalInputString().isBlank()) {
             return IHandler.ERROR_MSG_NULL_OR_EMPTY_INPUT;
-        } else if (!requestData.getInputString().matches("[a-z]+")) {
+        } else if (!requestData.getOriginalInputString().matches("[a-z]+")) {
             return IHandler.ERROR_MSG_ILLEGAL_CHARACTER_EXISTS;
         }
         return null;
@@ -42,4 +50,7 @@ public abstract class AbstractHandler implements IHandler {
         return pattern;
     }
 
+    public void addHandleListeners(IListener listener) {
+        this.handleListeners.add(listener);
+    }
 }

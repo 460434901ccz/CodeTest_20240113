@@ -1,8 +1,8 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.listener.ConsoleLogListener;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +17,7 @@ class ReplaceHandlerImplTest extends BaseTest {
     @BeforeAll
     static void beforeAll() {
         handler = ReplaceHandlerImpl.getInstance();
+        handler.addHandleListeners(new ConsoleLogListener());
     }
 
     @Test
@@ -1150,8 +1151,8 @@ class ReplaceHandlerImplTest extends BaseTest {
         for (int i = 0; i < 100; i++) {
             RequestData requestData = new RequestData(1, IHandler.TASK_TYPE_01, generateRandomLowercaseString(1024));
             ResponseData responseData = handler.handle(requestData);
-            Assertions.assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
-            Assertions.assertNull(responseData.getErrorMsg());
+            assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+            assertNull(responseData.getErrorMsg());
         }
     }
 }

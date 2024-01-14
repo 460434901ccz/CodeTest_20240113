@@ -1,5 +1,7 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.listener.LogListener;
+import matthew.codetest.listener.RequestStringTrimListener;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
 
@@ -35,7 +37,11 @@ public class ReplaceHandlerImpl extends AbstractHandler {
         if (handler == null) {
             synchronized (ReplaceHandlerImpl.class) {
                 if (handler == null) {
-                    handler = new ReplaceHandlerImpl();
+                    ReplaceHandlerImpl handlerTmp = new ReplaceHandlerImpl();
+                    handlerTmp.addHandleListeners(new LogListener());
+                    handlerTmp.addHandleListeners(new RequestStringTrimListener());
+
+                    handler = handlerTmp;
 
                     if (logger.isLoggable(Level.FINE)) {
                         logger.fine("ReplaceHandlerImpl generate instance");
@@ -51,9 +57,9 @@ public class ReplaceHandlerImpl extends AbstractHandler {
         ResponseData responseData = new ResponseData(requestData);
 
         if (logger.isLoggable(Level.INFO)) {
-            logger.info(requestData.getInputString());
+            logger.info(requestData.getPreProcessedString());
         }
-        String result = replace(requestData.getInputString());
+        String result = replace(requestData.getOriginalInputString());
 
         responseData.setOutputString(result);
         return responseData;

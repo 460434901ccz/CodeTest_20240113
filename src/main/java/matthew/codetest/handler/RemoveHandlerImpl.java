@@ -1,5 +1,7 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.listener.LogListener;
+import matthew.codetest.listener.RequestStringTrimListener;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
 
@@ -33,7 +35,11 @@ public class RemoveHandlerImpl extends AbstractHandler {
         if (handler == null) {
             synchronized (RemoveHandlerImpl.class) {
                 if (handler == null) {
-                    handler = new RemoveHandlerImpl();
+                    RemoveHandlerImpl handlerTmp = new RemoveHandlerImpl();
+                    handlerTmp.addHandleListeners(new LogListener());
+                    handlerTmp.addHandleListeners(new RequestStringTrimListener());
+
+                    handler = handlerTmp;
 
                     if (logger.isLoggable(Level.FINE)) {
                         logger.fine("RemoveHandlerImpl generate instance");
@@ -49,9 +55,9 @@ public class RemoveHandlerImpl extends AbstractHandler {
         ResponseData responseData = new ResponseData(requestData);
 
         if (logger.isLoggable(Level.INFO)) {
-            logger.info(requestData.getInputString());
+            logger.info(requestData.getPreProcessedString());
         }
-        String result = remove(requestData.getInputString());
+        String result = remove(requestData.getPreProcessedString());
 
         responseData.setOutputString(result);
         return responseData;

@@ -21,7 +21,7 @@ public class Main {
         RequestData requestData1 = new RequestData();
         requestData1.setTaskId(1);
         requestData1.setTaskType(IHandler.TASK_TYPE_01);
-        requestData1.setInputString("aabcccbbad");
+        requestData1.setOriginalInputString("aabcccbbad");
         ResponseData responseData1 = handler1.handle(requestData1);
         logger.info(responseData1.getOutputString());
 
@@ -29,7 +29,7 @@ public class Main {
         RequestData requestData2 = new RequestData();
         requestData2.setTaskId(1);
         requestData2.setTaskType(IHandler.TASK_TYPE_02);
-        requestData2.setInputString("abcccbad");
+        requestData2.setOriginalInputString("abcccbad");
         ResponseData responseData2 = handler2.handle(requestData2);
         logger.info(responseData2.getOutputString());
 

@@ -1,10 +1,9 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.listener.ConsoleLogListener;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +14,7 @@ class RemoveHandlerImplTest extends BaseTest {
     @BeforeAll
     static void beforeAll() {
         handler = RemoveHandlerImpl.getInstance();
+        handler.addHandleListeners(new ConsoleLogListener());
     }
 
     @Test
