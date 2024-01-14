@@ -1,27 +1,23 @@
 package matthew.codetest.model;
 
 public class ResponseData {
-    private int taskId;
-    private String taskType;
+    private RequestData requestData;
     private String outputString;
+    private String errorMsg;
 
     public ResponseData() {
     }
 
-    public int getTaskId() {
-        return taskId;
+    public ResponseData(RequestData requestData) {
+        this.requestData = requestData;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public RequestData getRequestData() {
+        return requestData;
     }
 
-    public String getTaskType() {
-        return taskType;
-    }
-
-    public void setTaskType(String taskType) {
-        this.taskType = taskType;
+    public void setRequestData(RequestData requestData) {
+        this.requestData = requestData;
     }
 
     public String getOutputString() {
@@ -32,13 +28,20 @@ public class ResponseData {
         this.outputString = outputString;
     }
 
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
     @Override
     public String toString() {
         return "ResponseData{" +
-                "taskId=" + taskId +
-                ", taskType='" + taskType + '\'' +
+                "requestData=" + requestData +
                 ", outputString='" + outputString + '\'' +
+                ", errorMsg='" + errorMsg + '\'' +
                 '}';
     }
 }

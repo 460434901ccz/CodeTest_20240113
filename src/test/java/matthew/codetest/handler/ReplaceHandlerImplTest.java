@@ -1,26 +1,35 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.model.RequestData;
+import matthew.codetest.model.ResponseData;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @DisplayName("Replace task test")
-class ReplaceHandlerImplTest {
-    private static ReplaceHandlerImpl handler = new ReplaceHandlerImpl();
+class ReplaceHandlerImplTest extends BaseTest {
+    private static ReplaceHandlerImpl handler;
 
-    @Test
-    @DisplayName("test")
-    void test() {
-        System.out.println("hello test");
-        handler.handle(null);
+
+    @BeforeAll
+    static void beforeAll() {
+        handler = ReplaceHandlerImpl.getInstance();
     }
-
 
     @Test
     @DisplayName("test null string")
     void testNullString() {
 
         final String requestString = null;
+        final var expectResponseErrorMsg = IHandler.ERROR_MSG_NULL_OR_EMPTY_INPUT;
 
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertNull(responseData.getOutputString());
+        assertEquals(expectResponseErrorMsg, responseData.getErrorMsg());
     }
 
     @Test
@@ -28,7 +37,12 @@ class ReplaceHandlerImplTest {
     void testEmptyString() {
 
         final var requestString = "";
+        final var expectResponseErrorMsg = IHandler.ERROR_MSG_NULL_OR_EMPTY_INPUT;
 
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertNull(responseData.getOutputString());
+        assertEquals(expectResponseErrorMsg, responseData.getErrorMsg());
     }
 
     @Test
@@ -36,7 +50,12 @@ class ReplaceHandlerImplTest {
     void testBlankString() {
 
         final var requestString = " ";
+        final var expectResponseErrorMsg = IHandler.ERROR_MSG_NULL_OR_EMPTY_INPUT;
 
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertNull(responseData.getOutputString());
+        assertEquals(expectResponseErrorMsg, responseData.getErrorMsg());
     }
 
     @Test
@@ -44,7 +63,12 @@ class ReplaceHandlerImplTest {
     void testIllegalCharacterAAAa() {
 
         final var requestString = "aAAa";
+        final var expectResponseErrorMsg = IHandler.ERROR_MSG_ILLEGAL_CHARACTER_EXISTS;
 
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertNull(responseData.getOutputString());
+        assertEquals(expectResponseErrorMsg, responseData.getErrorMsg());
     }
 
     @Test
@@ -52,7 +76,12 @@ class ReplaceHandlerImplTest {
     void testIllegalCharacterAXXa() {
 
         final var requestString = "a??a";
+        final var expectResponseErrorMsg = IHandler.ERROR_MSG_ILLEGAL_CHARACTER_EXISTS;
 
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertNull(responseData.getOutputString());
+        assertEquals(expectResponseErrorMsg, responseData.getErrorMsg());
     }
 
     @Test
@@ -60,7 +89,12 @@ class ReplaceHandlerImplTest {
     void testIllegalCharacterAEa() {
 
         final var requestString = "a a";
+        final var expectResponseErrorMsg = IHandler.ERROR_MSG_ILLEGAL_CHARACTER_EXISTS;
 
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertNull(responseData.getOutputString());
+        assertEquals(expectResponseErrorMsg, responseData.getErrorMsg());
     }
 
 
@@ -70,6 +104,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "a";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -78,6 +118,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aa";
         final var expectResponseString = "aa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -86,6 +132,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -94,6 +146,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -102,6 +160,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "b";
         final var expectResponseString = "b";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -110,6 +174,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bb";
         final var expectResponseString = "bb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -118,6 +188,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbb";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -126,6 +202,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbbb";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -134,6 +216,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "ab";
         final var expectResponseString = "ab";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -142,6 +230,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aab";
         final var expectResponseString = "aab";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -150,6 +244,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaab";
         final var expectResponseString = "b";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -158,6 +258,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaab";
         final var expectResponseString = "b";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -166,6 +272,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abb";
         final var expectResponseString = "abb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -174,6 +286,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabb";
         final var expectResponseString = "aabb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -182,6 +300,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabb";
         final var expectResponseString = "bb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -190,6 +314,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabb";
         final var expectResponseString = "bb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -198,6 +328,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbb";
         final var expectResponseString = "aa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -206,6 +342,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbb";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -214,6 +356,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbb";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -222,6 +370,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabbb";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -230,6 +384,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbb";
         final var expectResponseString = "aa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -238,6 +398,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbbb";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -246,6 +412,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbbb";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -254,6 +426,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabbbb";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -262,6 +440,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "ba";
         final var expectResponseString = "ba";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -270,6 +454,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bba";
         final var expectResponseString = "bba";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -278,6 +468,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbba";
         final var expectResponseString = "aa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -286,6 +482,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbbba";
         final var expectResponseString = "aa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -294,6 +496,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "baa";
         final var expectResponseString = "baa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -302,6 +510,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbaa";
         final var expectResponseString = "bbaa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -310,6 +524,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbbaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -318,6 +538,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbbbaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -326,6 +552,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "baaa";
         final var expectResponseString = "b";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -334,6 +566,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbaaa";
         final var expectResponseString = "bb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -342,6 +580,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "bbbaaa";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -350,6 +594,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abc";
         final var expectResponseString = "abc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -358,6 +608,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabc";
         final var expectResponseString = "aabc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -366,6 +622,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabc";
         final var expectResponseString = "bc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -374,6 +636,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabc";
         final var expectResponseString = "bc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -383,6 +651,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbc";
         final var expectResponseString = "abbc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -391,6 +665,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbc";
         final var expectResponseString = "aabbc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -399,6 +679,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbc";
         final var expectResponseString = "bbc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -407,6 +693,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabbc";
         final var expectResponseString = "bbc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -416,6 +708,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbc";
         final var expectResponseString = "aac";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -424,6 +722,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbbc";
         final var expectResponseString = "ac";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -432,6 +736,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabbbbc";
         final var expectResponseString = "ac";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -440,23 +750,41 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abcc";
         final var expectResponseString = "abcc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
-    @DisplayName("test abccc : ab ")
+    @DisplayName("test abccc : abb ")
     void testAbccc() {
 
         final var requestString = "abccc";
-        final var expectResponseString = "ab";
+        final var expectResponseString = "abb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
     @Test
-    @DisplayName("test abbccc : abb ")
+    @DisplayName("test abbccc : abbb : aa ")
     void testAbbccc() {
 
         final var requestString = "abbccc";
-        final var expectResponseString = "abb";
+        final var expectResponseString = "aa";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -465,6 +793,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbccc";
         final var expectResponseString = "aab";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -473,6 +807,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbccc";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -481,6 +821,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbccc";
         final var expectResponseString = "a";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -489,6 +835,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabccc";
         final var expectResponseString = "bb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -497,22 +849,40 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaaabcccc";
         final var expectResponseString = "bb";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
-    @DisplayName("test aaaabbbcccc : (empty) ")
+    @DisplayName("test aaaabbbcccc : ab ")
     void testAaaabbbcccc() {
 
         final var requestString = "aaaabbbcccc";
-        final var expectResponseString = "";
+        final var expectResponseString = "ab";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
-    @DisplayName("test aaaabbbbcccc : (empty) ")
+    @DisplayName("test aaaabbbbcccc : ab ")
     void testAaaabbbbcccc() {
 
         final var requestString = "aaaabbbbcccc";
-        final var expectResponseString = "";
+        final var expectResponseString = "ab";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -521,6 +891,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbcccd";
         final var expectResponseString = "aabd";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -529,6 +905,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbcddd";
         final var expectResponseString = "aacc";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -537,6 +919,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbcddde";
         final var expectResponseString = "aacce";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -545,6 +933,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbbcdddeee";
         final var expectResponseString = "accd";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -554,6 +948,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabbbccdddeee";
         final var expectResponseString = "abd";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -563,6 +963,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbcccdeeefff";
         final var expectResponseString = "aabdde";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -572,6 +978,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbcccdeeefffg";
         final var expectResponseString = "aabddeg";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -580,6 +992,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aaabcccddeeefggg";
         final var expectResponseString = "bbcff";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -588,6 +1006,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbba";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -597,6 +1021,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbba";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -606,6 +1036,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbbaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -615,6 +1051,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbba";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
@@ -624,6 +1066,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbbaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -632,6 +1080,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "aabbbbaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -640,6 +1094,12 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbcccba";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
@@ -648,27 +1108,50 @@ class ReplaceHandlerImplTest {
 
         final var requestString = "abbccccbaa";
         final var expectResponseString = "";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
-    @DisplayName("test abbcccdeeed : abbdd ")
+    @DisplayName("test abbcccdeeed : abbbddd : aac ")
     void testAbbcccdeeed() {
 
         final var requestString = "abbcccdeeed";
-        final var expectResponseString = "abbdd";
+        final var expectResponseString = "aac";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
     @Test
-    @DisplayName("test abbcccbbdeefffeg : abbbbbdeeeeg : adg ")
+    @DisplayName("test abbcccbbdeefffeg : abbbbbdeeeeg : aaddg ")
     void testAbbcccbbdeefffeg() {
 
         final var requestString = "abbcccbbdeefffeg";
-        final var expectResponseString = "adb";
+        final var expectResponseString = "aaddg";
+
+        ResponseData responseData = handler.handle(new RequestData(1, IHandler.TASK_TYPE_02, requestString));
+
+        assertEquals(expectResponseString, responseData.getOutputString());
+        assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+        assertNull(responseData.getErrorMsg());
     }
 
 
     @Test
     void testRandom() {
-
+        for (int i = 0; i < 100; i++) {
+            RequestData requestData = new RequestData(1, IHandler.TASK_TYPE_01, generateRandomLowercaseString(1024));
+            ResponseData responseData = handler.handle(requestData);
+            Assertions.assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
+            Assertions.assertNull(responseData.getErrorMsg());
+        }
     }
 }

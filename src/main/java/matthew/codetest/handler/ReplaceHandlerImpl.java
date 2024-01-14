@@ -3,7 +3,9 @@ package matthew.codetest.handler;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 
 /*
@@ -23,9 +25,69 @@ public class ReplaceHandlerImpl extends AbstractHandler {
 
     private static final Logger logger = Logger.getLogger(ReplaceHandlerImpl.class.getName());
 
-    @Override
-    public ResponseData handle(RequestData requestData) {
-        System.out.println("ReplaceHandlerImpl handle method");
-        return null;
+    // the volatile modifier is used to prevent instruction reordering
+    private volatile static ReplaceHandlerImpl handler;
+
+    private ReplaceHandlerImpl() {
     }
+
+    public static ReplaceHandlerImpl getInstance() {
+        if (handler == null) {
+            synchronized (ReplaceHandlerImpl.class) {
+                if (handler == null) {
+                    handler = new ReplaceHandlerImpl();
+
+                    if (logger.isLoggable(Level.FINE)) {
+                        logger.fine("ReplaceHandlerImpl generate instance");
+                    }
+                }
+            }
+        }
+        return handler;
+    }
+
+    @Override
+    ResponseData handler0(RequestData requestData) {
+        ResponseData responseData = new ResponseData(requestData);
+
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(requestData.getInputString());
+        }
+        String result = replace(requestData.getInputString());
+
+        responseData.setOutputString(result);
+        return responseData;
+    }
+
+    private String replace(String input) {
+        Matcher matcher = getPattern().matcher(input);
+        String result = input;
+
+        //exit recursion
+        if (!matcher.find()) return result;
+        //exit recursion
+
+        matcher.reset();
+        while (matcher.find()) {
+
+            String subString = matcher.group();
+
+            String beforeCString = "";
+            char c = subString.charAt(0);
+            if (c != 'a') {
+                beforeCString = new String(new char[]{(char) ((int) c - 1)});
+            }
+
+            result = result.substring(0, result.indexOf(subString)) + beforeCString
+                    + result.substring(result.indexOf(subString) + subString.length());
+        }
+
+        if (logger.isLoggable(Level.INFO)) {
+            logger.info(result);
+        }
+
+        return replace(result);
+    }
+
+
 }
