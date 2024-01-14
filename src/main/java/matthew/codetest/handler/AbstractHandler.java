@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Do some common validate handle
+ *
+ * @author Matthew Cai
+ */
 public abstract class AbstractHandler implements IHandler {
 
     private Pattern pattern = Pattern.compile(REGEX_STRING);
@@ -19,10 +24,13 @@ public abstract class AbstractHandler implements IHandler {
         handleListeners.stream().forEach(listener -> listener.preHandle(requestData));
 
         ResponseData responseData;
-
         String errorMsg = validate(requestData);
         if (errorMsg == null) {
+
+
             responseData = handler0(requestData);
+
+
         } else {
             responseData = new ResponseData(requestData);
             responseData.setErrorMsg(errorMsg);

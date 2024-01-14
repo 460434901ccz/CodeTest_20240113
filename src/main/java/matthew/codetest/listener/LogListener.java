@@ -6,6 +6,11 @@ import matthew.codetest.model.ResponseData;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Provide to log some detail msg.
+ *
+ * @author Matthew Cai
+ */
 public class LogListener implements IListener {
     private static final Logger logger = Logger.getLogger(LogListener.class.getName());
 

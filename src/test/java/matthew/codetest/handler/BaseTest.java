@@ -6,6 +6,11 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Some actions that each task needs to perform
+ *
+ * @author Matthew Cai
+ */
 class BaseTest {
     private Pattern pattern = Pattern.compile(IHandler.REGEX_STRING);
 

@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 /**
  * Warning: A synchronized lock is in System.out.println method. It affects performance if it were be called concurrently
  * It should only be used in a development environment.
+ *
+ * @author Matthew Cai
  */
 public class ConsoleLogListener implements IListener {
     private static final Logger logger = Logger.getLogger(ConsoleLogListener.class.getName());

@@ -9,6 +9,21 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * #Stage 2 - advanced requirement
+ * Instead of removing the consecutively identical characters, replace them with a
+ * single character that comes before it alphabetically.
+ * Example:
+ * ccc -> b
+ * bbb -> a
+ * Input: abcccbad
+ * Output:
+ * -> abbbad, ccc is replaced by b
+ * -> aaad, bbb is replaced by a
+ * -> d
+ *
+ * @author Matthew Cai
+ */
 @DisplayName("Replace task test")
 class ReplaceHandlerImplTest extends BaseTest {
     private static ReplaceHandlerImpl handler;

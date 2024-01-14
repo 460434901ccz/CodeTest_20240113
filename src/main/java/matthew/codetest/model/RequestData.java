@@ -1,5 +1,8 @@
 package matthew.codetest.model;
 
+/**
+ * @author Matthew Cai
+ */
 public class RequestData {
     private int taskId;
     private String taskType;

@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.LogManager;
 
+/**
+ * Replace the default log config file with customize
+ *
+ * @author Matthew Cai
+ */
 public class LogConfigInitializer {
 
     public static void init() {

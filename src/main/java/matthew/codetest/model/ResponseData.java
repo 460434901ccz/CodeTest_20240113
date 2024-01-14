@@ -1,5 +1,8 @@
 package matthew.codetest.model;
 
+/**
+ * @author Matthew Cai
+ */
 public class ResponseData {
     private RequestData requestData;
     private String outputString;

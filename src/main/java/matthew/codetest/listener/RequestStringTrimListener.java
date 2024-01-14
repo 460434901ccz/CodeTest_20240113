@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 /**
  * Delete whitespace characters on both sides of the request string
+ *
+ * @author Matthew Cai
  */
 public class RequestStringTrimListener implements IListener {
     private static final Logger logger = Logger.getLogger(RequestStringTrimListener.class.getName());

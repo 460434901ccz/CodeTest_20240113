@@ -10,6 +10,11 @@ import matthew.codetest.model.ResponseData;
 import java.time.LocalTime;
 import java.util.logging.Logger;
 
+/**
+ * Some simple test, more test cases are in unit tests
+ *
+ * @author Matthew Cai
+ */
 public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
