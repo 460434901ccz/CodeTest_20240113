@@ -1149,7 +1149,7 @@ class ReplaceHandlerImplTest extends BaseTest {
     @Test
     void testRandom() {
         for (int i = 0; i < 100; i++) {
-            RequestData requestData = new RequestData(1, IHandler.TASK_TYPE_01, generateRandomLowercaseString(1024));
+            RequestData requestData = new RequestData(1, IHandler.TASK_TYPE_02, generateRandomLowercaseString(1024));
             ResponseData responseData = handler.handle(requestData);
             assertTrue(notExistMoreThanThreeConsecutiveCharacters(responseData.getOutputString()));
             assertNull(responseData.getErrorMsg());
