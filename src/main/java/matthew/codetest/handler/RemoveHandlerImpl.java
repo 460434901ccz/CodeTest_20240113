@@ -81,7 +81,7 @@ public class RemoveHandlerImpl extends AbstractHandler {
         }
 
         if (logger.isLoggable(Level.INFO)) {
-            logger.info(result);
+            logger.info("Process log: " + result);
         }
 
         return remove(result);

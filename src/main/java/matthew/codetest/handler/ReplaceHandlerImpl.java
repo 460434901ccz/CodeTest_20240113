@@ -89,7 +89,7 @@ public class ReplaceHandlerImpl extends AbstractHandler {
         }
 
         if (logger.isLoggable(Level.INFO)) {
-            logger.info(result);
+            logger.info("Process log: " + result);
         }
 
         return replace(result);

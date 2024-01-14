@@ -3,6 +3,7 @@ package matthew.codetest;
 import matthew.codetest.handler.IHandler;
 import matthew.codetest.handler.RemoveHandlerImpl;
 import matthew.codetest.handler.ReplaceHandlerImpl;
+import matthew.codetest.log.LogConfigInitializer;
 import matthew.codetest.model.RequestData;
 import matthew.codetest.model.ResponseData;
 
@@ -13,6 +14,8 @@ public class Main {
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
+        LogConfigInitializer.init();
+
         LocalTime localTime = LocalTime.now();
         logger.info("localTime:" + localTime);
 

@@ -1,11 +1,17 @@
 package matthew.codetest.handler;
 
+import matthew.codetest.log.LogConfigInitializer;
+
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class BaseTest {
     private Pattern pattern = Pattern.compile(IHandler.REGEX_STRING);
+
+    static {
+        LogConfigInitializer.init();
+    }
 
     /**
      * Check whether there are more than three consecutive characters
